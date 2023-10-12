@@ -1,0 +1,30 @@
+/prime Optimization
+import java.util.*;
+import java.lang.Math;
+import java.util.Arrays;
+class prime
+{
+   public static void main(String args[])
+   {
+	int n=10000000;
+	double startTime = System.currentTimeMillis();
+	boolean a[]=new boolean[n];
+	//Arrays.fill(a,true);
+	int b=(int)Math.sqrt(n);
+	for(int i=2;i<=b;i++)
+	{
+	   if(a[i]==false)
+	   {
+		for(int j=i*i;j<n;j+=i)
+		    a[j]=true;
+	   }
+        }
+	int count=0;
+       for(int i=2;i<a.length;i++)
+         if(a[i]==false)
+	   count++;
+	System.out.println(count);
+	double endTime   = System.currentTimeMillis();
+	System.out.println((endTime - startTime)/1000);
+	}
+}

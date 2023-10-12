@@ -1,0 +1,104 @@
+The Sieve of Eratosthenes is an ancient and efficient algorithm for finding all prime numbers up to a specified limit. It was developed by the Greek mathematician Eratosthenes around 240 BC and remains one of the most popular and straightforward methods for generating prime numbers.
+
+it is one of the most efficient ways to find small prime numbers.
+
+The Sieve of Eratosthenes, a brilliant ancient algorithm attributed to the Greek mathematician Eratosthenes, stands as one of the most efficient methods to identify prime numbers up to a specific limit. This ingenious technique begins by creating a list of numbers from 2 to the desired limit, initially marking all of them as potential prime numbers.
+
+The process unfolds systematically. First, it identifies the smallest unmarked number, which is 2, and designates it as prime. It then proceeds to eliminate all multiples of this prime number by crossing them off the list. This ensures that only prime numbers remain unmarked, as they have no other divisors apart from 1 and themselves. The algorithm continues this pattern, marking the next unmarked number as prime and eliminating its multiples.
+
+By the time the algorithm concludes, all unmarked numbers are prime, while the marked numbers are composites. The Sieve of Eratosthenes is renowned for its efficiency because it avoids redundant work by skipping multiples already marked as composites.Nevertheless, the Sieve of Eratosthenes is a testament to the enduring power of mathematical insight, and it remains a valuable tool in number theory and prime number generation.
+
+
+Algorithm:
+1)- Inorder to find the number of primes in given range,list out the numbers from 2 to n.
+2)- start with the smallest prime number i.e,2.
+3)- mark all the multiples of 2 which are less than n as composite.Inorder to do this you can represent composite numbers as 0's or false so the alternate will be the prime.
+4)- once the iteration is completed go to the next element by incrementibg the prime.
+5)- Make sure your next number should be the one which is not composite i.e it should be a non-zero number greater than p.
+6)- Repeat the same process till the range sqrt(n).
+
+We are done!
+Now all the non-zero numbers are the prime numbers
+
+java				python
+10^1--0.00    4                 10^1-- 0.00    
+10^2--0.001   25                10^2--0.00
+10^3--0.001   168               10^3--0.0002
+10^4--0.001   1229              10^4--0.002
+10^5--0.01    9592              10^5--0.023
+10^6--0.011   78498             10^6--0.385
+10^7--0.047   664579            10^7--1.721
+10^8--0.725   5761445           10^8--
+
+//Python
+import math
+import time
+n=100000000
+l=[True]*(n)
+start=time.time()
+a=int(math.sqrt(n))
+p=2
+for i in range(p,a):
+    if l[i]:
+        for j in range(p*p,n,p):
+            l[j]=False
+    p+=1
+primes = [i for i in range(2, n) if l[i]]
+print(len(primes))
+end=time.time()
+print((end-start))
+
+//Java
+import java.util.*;
+import java.lang.Math;
+import java.util.Arrays;
+class prime
+{
+   public static void main(String args[])
+   {
+	int n=10;
+	boolean a[]=new boolean[n];
+	double startTime = System.currentTimeMillis();
+	int b=(int)Math.sqrt(n);
+	for(int i=2;i<=b;i++)
+	{
+	   if(a[i]==false)
+	   {
+		for(int j=i*i;j<n;j+=i)
+		    a[j]=true;
+	   }
+    }
+	int count=0;
+       for(int i=2;i<a.length;i++)
+         if(a[i]==false)
+	   count++;
+	System.out.println(count);
+	double endTime   = System.currentTimeMillis();
+	System.out.println((endTime - startTime)/1000);
+	}
+}
+
+
+//c
+#include <stdio.h>
+int main() 
+{
+    long a=10000000;
+    long arr[a];
+    for(long i=0;i<a;i++)
+        arr[i]=0;
+    long b=sqrt(a);
+    for(long i=2;i<=b;i++)
+    {
+        if(arr[i]==0)
+        {
+            for(long j=i*i;j<a;j+=i)
+                arr[j]=1;
+        }
+    }
+    int count=0;
+    for(long i=2;i<a;i++)
+        if(arr[i]==0)
+            count+=1;
+    printf("%d",count);
+}

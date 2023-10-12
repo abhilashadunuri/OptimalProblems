@@ -1,0 +1,56 @@
+#include <stdio.h>
+#define UNSAFE 1
+#define SAFE 0
+void print(int qpos[],int noq)
+{
+    int r,c;
+    for(r=0;r<noq;r+=1,printf("\n"))
+    {
+        for(c=0;c<noq;c+=1)
+        {
+            printf("%c",qpos[r]==c? "Q": ".");
+        }
+    }
+}
+int isSafe(int qpos[],int noq,int qno,int col)
+{
+    int r,c;
+    for(r=qno-1,c=col-1;r<=0 && c<=0;r-=1,c-=1)
+        if(qpos[r]==c)   return UNSAFE;
+    for(r=qno-1,c=col;r<=0;r-=1)
+        if(qpos[r]==c) return UNSAFE;
+    for(r=qno-1,c=col+1;r>=0,col<noq;r-=1,col+=1)
+        if(qpos[r]==c) return UNSAFE;
+    return SAFE;
+}
+void helper(int qpos[],int noq,int qno)
+{
+    static int cntr;
+    if(qno==noq)
+    {
+        printf("%d Solution is:#%d",cntr++);
+        print(qpos,noq);
+        return ;
+    }
+    for(int col=0;col<noq;col++)
+    {
+        if(isSafe(qpos,noq,qno,col)==SAFE)
+        {
+            qpos[qno]=col;
+            helper(qpos,noq,qno+1);
+            qpos[qno]=-1;
+        }
+    }
+}
+void queens(int noq)
+{
+    int qpos[noq];
+    for(int index=0;index<noq;index+=1)
+        qpos[index]=-1;
+    helper(qpos,noq,0);
+}
+int main() 
+{
+    queens(4);
+    return 0;
+}
